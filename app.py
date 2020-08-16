@@ -1,10 +1,6 @@
 from flask import Flask, escape, request, render_template
-import numpy as np
-import pandas as pd
-import io, os, base64
-import urllib
-import urllib.request
-import matplotlib.pyplot as plt
+# import pandas as pd
+# import matplotlib.pyplot as plt
 from datetime import datetime
 
 app = Flask(__name__)
@@ -12,8 +8,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    #url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
-    #urllib.request.urlretrieve(url, 'output.csv')
     return render_template("index.html")
 
 @app.route('/time')
@@ -29,25 +23,21 @@ def corona():
     elif request.method == 'GET':
         return render_template("covid.html", todays_date = todays_date)
 
-country = 'Finland'
-def covidStatus(country):
-    pop_df = pd.read_csv('output.csv')
-    pop = pop_df[pop_df.countriesAndTerritories == country]
-    fig, ax = plt.subplots()
-    ax.plot(pop.month.sort_values(), pop.cases.sort_values())
+# country = 'Finland'
+# def covidStatus(country):
+#     pop_df = pd.read_csv('output.csv')
+#     pop = pop_df[pop_df.countriesAndTerritories == country]
+#     fig, ax = plt.subplots()
+#     ax.plot(pop.month.sort_values(), pop.cases.sort_values())
 
-    ax.set(xlabel='Month (s)', ylabel='covid-19 cases',
-           title='Covid19 in Finland')
+#     ax.set(xlabel='Month (s)', ylabel='covid-19 cases',
+#            title='Covid19 in Finland')
     
 
-    fig.savefig("static\images\test.png")
-    plt.show()
+#     fig.savefig("static\images\test.png")
+#     plt.show()
     
     covidStatus(country)
 
-
-
-
 if __name__ == "__main__":
-   
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
